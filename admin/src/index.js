@@ -1,52 +1,28 @@
 import pluginPkg from '../../package.json';
 import pluginId from './pluginId';
-import App from './containers/App';
-import Initializer from './containers/Initializer';
-import lifecycles from './lifecycles';
-import trads from './translations';
+import IconPicker from "./components/IconPicker/IconPicker";
 
 export default strapi => {
   const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
-  const icon = pluginPkg.strapi.icon;
-  const name = pluginPkg.strapi.name;
 
   const plugin = {
     blockerComponent: null,
     blockerComponentProps: {},
     description: pluginDescription,
-    icon,
+    icon: pluginPkg.strapi.icon,
     id: pluginId,
-    initializer: Initializer,
+    initializer: () => null,
     injectedComponents: [],
-    isReady: false,
+    isReady: true,
     isRequired: pluginPkg.strapi.required || false,
-    layout: null,
-    lifecycles,
-    mainComponent: App,
-    name,
+    mainComponent: null,
+    name: pluginPkg.strapi.name,
     preventComponentRendering: false,
-    trads,
-    menu: {
-      pluginsSectionLinks: [
-        {
-          destination: `/plugins/${pluginId}`,
-          icon,
-          label: {
-            id: `${pluginId}.plugin.name`,
-            defaultMessage: name,
-          },
-          name,
-          permissions: [
-            // Uncomment to set the permissions of the plugin here
-            // {
-            //   action: '', // the action name should be plugins::plugin-name.actionType
-            //   subject: null,
-            // },
-          ],
-        },
-      ],
-    },
+    settings: null,
+    trads: {},
   };
+
+  strapi.registerField({type: 'iconPicker', Component: IconPicker });
 
   return strapi.registerPlugin(plugin);
 };
