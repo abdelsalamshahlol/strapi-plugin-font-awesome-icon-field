@@ -13,11 +13,20 @@ overflow-y: scroll;
 `;
 
 const IconWrap = styled.div`
-display: block;
+display: flex;
+justify-content:center;
+align-items:center;
+transition: 0.5s all;
 width: 30%;
 padding: 0.5rem;
 border: 1px solid #6c757d1a;
 flex: 1 0 10%;
+
+  &:hover {
+    box-shadow: 1px 1px 3px #73859f;
+    background: #437eff;
+    color: #fafafb;
+  }
 `;
 
 const PickerButton = () => {
@@ -34,7 +43,7 @@ const PickerButton = () => {
                   const {prefix, iconName} = ICONS[icon]
                   if (iconName) {
                     return (
-                      <IconWrap>
+                      <IconWrap key={iconName}>
                         <FontAwesomeIcon icon={ICONS[icon]}/>
                       </IconWrap>
                     )
